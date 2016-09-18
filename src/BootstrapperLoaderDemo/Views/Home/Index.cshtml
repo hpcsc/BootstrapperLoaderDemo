@@ -1,0 +1,31 @@
+﻿@model IEnumerable<BootstrapperLoaderDemo.Core.ManageBooks.Book>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="page-header">
+        <h3>My Favourite Books</h3>
+    </div>
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Title</td>
+            <td>Author</td>
+            <td>Publisher</td>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Publisher</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

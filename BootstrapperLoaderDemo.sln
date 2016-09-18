@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{01B8FF62-E516-409B-9F2A-493B6665BA05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{367EE31F-F590-4531-ACBD-E7AC30AA5F43}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BootstrapperLoaderDemo", "src\BootstrapperLoaderDemo\BootstrapperLoaderDemo.xproj", "{EE68ED43-C11C-4FC7-973C-0C5D66D0D865}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E6A4051D-A4CE-419B-A25F-B7A7CF62ECB4} = {E6A4051D-A4CE-419B-A25F-B7A7CF62ECB4}
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BootstrapperLoaderDemo.Core", "src\BootstrapperLoaderDemo.Core\BootstrapperLoaderDemo.Core.xproj", "{1065E134-D0D7-49A6-B948-A50254229926}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BootstrapperLoaderDemo.Repository", "src\BootstrapperLoaderDemo.Repository\BootstrapperLoaderDemo.Repository.xproj", "{E6A4051D-A4CE-419B-A25F-B7A7CF62ECB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE68ED43-C11C-4FC7-973C-0C5D66D0D865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE68ED43-C11C-4FC7-973C-0C5D66D0D865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE68ED43-C11C-4FC7-973C-0C5D66D0D865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE68ED43-C11C-4FC7-973C-0C5D66D0D865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1065E134-D0D7-49A6-B948-A50254229926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1065E134-D0D7-49A6-B948-A50254229926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1065E134-D0D7-49A6-B948-A50254229926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1065E134-D0D7-49A6-B948-A50254229926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6A4051D-A4CE-419B-A25F-B7A7CF62ECB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6A4051D-A4CE-419B-A25F-B7A7CF62ECB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6A4051D-A4CE-419B-A25F-B7A7CF62ECB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6A4051D-A4CE-419B-A25F-B7A7CF62ECB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EE68ED43-C11C-4FC7-973C-0C5D66D0D865} = {01B8FF62-E516-409B-9F2A-493B6665BA05}
+		{1065E134-D0D7-49A6-B948-A50254229926} = {01B8FF62-E516-409B-9F2A-493B6665BA05}
+		{E6A4051D-A4CE-419B-A25F-B7A7CF62ECB4} = {01B8FF62-E516-409B-9F2A-493B6665BA05}
+	EndGlobalSection
+EndGlobal
