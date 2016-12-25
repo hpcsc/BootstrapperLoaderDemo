@@ -17,7 +17,7 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-    "Sharpenter.BootstrapperLoader": "1.2.1"
+    "Sharpenter.BootstrapperLoader": "1.2.2"
   },
 
   "tools": {
