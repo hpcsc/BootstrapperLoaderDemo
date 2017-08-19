@@ -8,9 +8,9 @@ namespace BootstrapperLoaderDemo.Repository
 {
     public class Bootstrapper
     {
-        private readonly IConfigurationRoot _configuration;
+        private readonly IConfiguration _configuration;
 
-        public Bootstrapper(IConfigurationRoot configuration)
+        public Bootstrapper(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -19,7 +19,7 @@ namespace BootstrapperLoaderDemo.Repository
         public void ConfigureContainer(IServiceCollection services)
         {
             services.AddScoped<IBookRepository, BookRepository>();
-
+            
             services.AddEntityFrameworkSqlServer()
                     .AddDbContext<BookContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))

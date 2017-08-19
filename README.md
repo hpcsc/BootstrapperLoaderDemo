@@ -2,7 +2,7 @@
 
 ## Run the application
 
-- Build the solution (make sure your machine has .NET Core - Version 1.0.0-preview2-1-003177)
+- Build the solution (make sure your machine has .NET Core - Version 2.0.0)
 - Update connection string in `BootstrapperLoaderDemo\appsettings.json` to correct SQL Server Instance name (I use SQL Server Instance `SQLExpress2014` in this example)
 - Run `BootstrapperLoaderDemo`
 
@@ -19,12 +19,12 @@ If everything works correctly, it should show this home page:
 ## Notes
 
 - There's no project reference from `BootstrapperLoader` to `BootstrapperLoaderDemo.Repository`. Controllers work strictly with repository interfaces (from `Core` project)
-- Since there's no project reference from `BootstrapperLoader` to `BootstrapperLoaderDemo.Repository`, Visual Studio will not copy `BootstrapperLoaderDemo.Repository.dll` and its dependencies to output directory of `BootstrapperLoader` during building. To work around this, I use post-compile script in `project.json`:
+- Since there's no project reference from `BootstrapperLoader` to `BootstrapperLoaderDemo.Repository`, Visual Studio will not copy `BootstrapperLoaderDemo.Repository.dll` and its dependencies to output directory of `BootstrapperLoader` during building. To work around this, I use `PostBuild` target in `BootstrapperLoaderDemo.csproj`:
 
 ```
-"postcompile": [
-    "xcopy /y /d .\\..\\BootstrapperLoaderDemo.Repository\\bin\\%compile:Configuration%\\%compile:TargetFramework%\\*.dll .\\bin\\%compile:Configuration%\\%compile:TargetFramework%\\%compile:RuntimeIdentifier%\\"
-]
+<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+<Exec Command="xcopy /y /d .\..\BootstrapperLoaderDemo.Repository\bin\$(Configuration)\$(TargetFramework)\*.dll .\bin\$(Configuration)\$(TargetFramework)\" />
+</Target>
 ```
 
 - `BootstrapperLoaderDemo.Repository` is responsible for its own initialization (in `Bootstrapper` class):

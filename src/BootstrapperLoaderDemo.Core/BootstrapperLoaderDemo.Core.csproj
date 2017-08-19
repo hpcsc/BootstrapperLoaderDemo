@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>BootstrapperLoaderDemo.Core</AssemblyName>
+    <PackageId>BootstrapperLoaderDemo.Core</PackageId>
+    <Version>1.0.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Authors>David Nguyen</Authors>
+    <Product>BootstrapperLoaderDemo.Core</Product>
+    <Copyright>Copyright © 2017 David Nguyen</Copyright>
+  </PropertyGroup>
+
+</Project>
