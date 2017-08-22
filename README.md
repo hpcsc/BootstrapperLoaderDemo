@@ -22,8 +22,18 @@ If everything works correctly, it should show this home page:
 - Since there's no project reference from `BootstrapperLoader` to `BootstrapperLoaderDemo.Repository`, Visual Studio will not copy `BootstrapperLoaderDemo.Repository.dll` and its dependencies to output directory of `BootstrapperLoader` during building. To work around this, I use `PostBuild` target in `BootstrapperLoaderDemo.csproj`:
 
 ```
+<ItemGroup>
+  <ItemsToCopy Include="./../BootstrapperLoaderDemo.Repository/bin/$(Configuration)/$(TargetFramework)/*.dll" />
+</ItemGroup>
 <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-<Exec Command="xcopy /y /d .\..\BootstrapperLoaderDemo.Repository\bin\$(Configuration)\$(TargetFramework)\*.dll .\bin\$(Configuration)\$(TargetFramework)\" />
+  <Copy
+      SourceFiles="@(ItemsToCopy)"
+      DestinationFolder="./bin/$(Configuration)/$(TargetFramework)/temp/">
+      <Output
+          TaskParameter="CopiedFiles"
+          ItemName="SuccessfullyCopiedFiles"/>
+    </Copy>
+    <Message Importance="High" Text="PostBuild Target successfully copied:%0a@(ItemsToCopy->'- %(fullpath)', '%0a')%0a -> %0a@(SuccessfullyCopiedFiles->'- %(fullpath)', '%0a')"/>
 </Target>
 ```
 

@@ -12,7 +12,17 @@
   <ItemGroup>
     <ProjectReference Include="..\BootstrapperLoaderDemo.Core\BootstrapperLoaderDemo.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <ItemsToCopy Include="./../BootstrapperLoaderDemo.Repository/bin/$(Configuration)/$(TargetFramework)/*.dll" />
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /y /d .\..\BootstrapperLoaderDemo.Repository\bin\$(Configuration)\$(TargetFramework)\*.dll .\bin\$(Configuration)\$(TargetFramework)\" />
+    <Copy
+        SourceFiles="@(ItemsToCopy)"
+        DestinationFolder="./bin/$(Configuration)/$(TargetFramework)/temp/">
+        <Output
+            TaskParameter="CopiedFiles"
+            ItemName="SuccessfullyCopiedFiles"/>
+     </Copy>
+     <Message Importance="High" Text="PostBuild Target successfully copied:%0a@(ItemsToCopy->'- %(fullpath)', '%0a')%0a -> %0a@(SuccessfullyCopiedFiles->'- %(fullpath)', '%0a')"/>
   </Target>
 </Project>
