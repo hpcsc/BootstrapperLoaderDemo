@@ -18,7 +18,7 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Copy
         SourceFiles="@(ItemsToCopy)"
-        DestinationFolder="./bin/$(Configuration)/$(TargetFramework)/temp/">
+        DestinationFolder="./bin/$(Configuration)/$(TargetFramework)/">
         <Output
             TaskParameter="CopiedFiles"
             ItemName="SuccessfullyCopiedFiles"/>
