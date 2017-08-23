@@ -61,7 +61,12 @@ namespace BootstrapperLoaderDemo
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            _bootstrapperLoader.TriggerConfigure(app.ApplicationServices.GetService);
+            // need to create scope during application startup due to: https://stackoverflow.com/questions/44180773/dependency-injection-in-asp-net-core-2-thows-exception
+            var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
+            {
+                _bootstrapperLoader.TriggerConfigure(scope.ServiceProvider.GetRequiredService);
+            }
         }
     }
 }

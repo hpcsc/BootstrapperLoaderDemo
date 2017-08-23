@@ -19,11 +19,11 @@ namespace BootstrapperLoaderDemo.Repository
         public void ConfigureContainer(IServiceCollection services)
         {
             services.AddScoped<IBookRepository, BookRepository>();
-            
-            services.AddEntityFrameworkSqlServer()
+
+            services.AddEntityFrameworkNpgsql()
                     .AddDbContext<BookContext>(options =>
-                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"))
-            );            
+                options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"))
+            );
         }
 
         public void ConfigureDevelopment(BookContext context)
