@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using BootstrapperLoaderDemo.Core.ManageBooks;
-using Microsoft.EntityFrameworkCore;
 
 namespace BootstrapperLoaderDemo.Repository.ManageBooks
 {

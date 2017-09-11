@@ -1,17 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using BootstrapperLoaderDemo.Core.ManageBooks;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace BootstrapperLoaderDemo.Repository
 {
-    internal class DbInitializer
+    public class DbInitializer : DropCreateDatabaseAlways<BookContext>
     {
-        internal static void Seed(DbContext context)
+        protected override void Seed(BookContext context)
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-
             var books = new List<Book>
             {
                 new Book("C# in Depth", "Jon Skeet", "Manning Publications"),

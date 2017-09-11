@@ -1,21 +1,27 @@
-﻿using BootstrapperLoaderDemo.Core.ManageBooks;
-using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using BootstrapperLoaderDemo.Core.ManageBooks;
 
 namespace BootstrapperLoaderDemo.Repository
 {
     public class BookContext : DbContext
     {
-        public BookContext(DbContextOptions<BookContext> options) : base(options)
+        static BookContext()
         {
+            Database.SetInitializer<BookContext>(null);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public BookContext(string connectionStringName)
+            : base(connectionStringName)
         {
-            modelBuilder.Entity<Book>(builder =>
-            {
-                builder.HasKey(b => b.Id);
-                builder.Property(b => b.Id).ValueGeneratedOnAdd();
-            });
+            base.Configuration.LazyLoadingEnabled = false;
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Book>()
+                .HasKey(b => b.Id)
+                .Property(b => b.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         }
     }
 }

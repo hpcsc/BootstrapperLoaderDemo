@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Web.Mvc;
 using BootstrapperLoaderDemo.Core.ManageBooks;
 
 namespace BootstrapperLoaderDemo.Controllers
@@ -12,16 +12,11 @@ namespace BootstrapperLoaderDemo.Controllers
             _bookRepository = bookRepository;
         }
 
-        public IActionResult Index()
+        public ActionResult Index()
         {
             var books = _bookRepository.FindAll();
 
             return View(books);
-        }
-
-        public IActionResult Error()
-        {
-            return View();
         }
     }
 }

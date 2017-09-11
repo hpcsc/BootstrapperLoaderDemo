@@ -1,34 +1,29 @@
-﻿using BootstrapperLoaderDemo.Core.ManageBooks;
+﻿using System.Data.Entity;
+using Autofac;
+using BootstrapperLoaderDemo.Core.ManageBooks;
 using BootstrapperLoaderDemo.Repository.ManageBooks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BootstrapperLoaderDemo.Repository
 {
     public class Bootstrapper
     {
-        private readonly IConfiguration _configuration;
+        private readonly string _connectionStringName;
 
-        public Bootstrapper(IConfiguration configuration)
+        public Bootstrapper(string connectionStringName)
         {
-            _configuration = configuration;
+            _connectionStringName = connectionStringName;
         }
 
-
-        public void ConfigureContainer(IServiceCollection services)
+        public void ConfigureContainer(ContainerBuilder builder)
         {
-            services.AddScoped<IBookRepository, BookRepository>();
-
-            services.AddEntityFrameworkNpgsql()
-                    .AddDbContext<BookContext>(options =>
-                options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"))
-            );
+            builder.RegisterType<BookRepository>().As<IBookRepository>();
+            builder.RegisterType<BookContext>().AsSelf().InstancePerLifetimeScope()
+                .WithParameter("connectionStringName", _connectionStringName);
         }
 
         public void ConfigureDevelopment(BookContext context)
         {
-            DbInitializer.Seed(context);
+            Database.SetInitializer(new DbInitializer());
         }
     }
 }
