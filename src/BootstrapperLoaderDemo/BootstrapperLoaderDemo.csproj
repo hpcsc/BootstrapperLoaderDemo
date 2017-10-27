@@ -12,10 +12,10 @@
   <ItemGroup>
     <ProjectReference Include="..\BootstrapperLoaderDemo.Core\BootstrapperLoaderDemo.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ItemsToCopy Include="./../BootstrapperLoaderDemo.Repository/bin/$(Configuration)/$(TargetFramework)/*.dll" />
-  </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="Build">
+    <ItemGroup>
+      <ItemsToCopy Include="./../BootstrapperLoaderDemo.Repository/bin/$(Configuration)/$(TargetFramework)/*" />
+    </ItemGroup>
     <Copy
         SourceFiles="@(ItemsToCopy)"
         DestinationFolder="./bin/$(Configuration)/$(TargetFramework)/">
