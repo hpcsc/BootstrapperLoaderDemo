@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    <PackageReference Include="Sharpenter.BootstrapperLoader" Version="1.2.4" />
+    <PackageReference Include="Sharpenter.BootstrapperLoader" Version="1.2.5" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
@@ -16,13 +16,9 @@
     <ItemGroup>
       <ItemsToCopy Include="./../BootstrapperLoaderDemo.Repository/bin/$(Configuration)/$(TargetFramework)/*" />
     </ItemGroup>
-    <Copy
-        SourceFiles="@(ItemsToCopy)"
-        DestinationFolder="./bin/$(Configuration)/$(TargetFramework)/">
-        <Output
-            TaskParameter="CopiedFiles"
-            ItemName="SuccessfullyCopiedFiles"/>
-     </Copy>
-     <Message Importance="High" Text="PostBuild Target successfully copied:%0a@(ItemsToCopy->'- %(fullpath)', '%0a')%0a -> %0a@(SuccessfullyCopiedFiles->'- %(fullpath)', '%0a')"/>
+    <Copy SourceFiles="@(ItemsToCopy)" DestinationFolder="./bin/$(Configuration)/$(TargetFramework)/">
+      <Output TaskParameter="CopiedFiles" ItemName="SuccessfullyCopiedFiles" />
+    </Copy>
+    <Message Importance="High" Text="PostBuild Target successfully copied:%0a@(ItemsToCopy->'- %(fullpath)', '%0a')%0a -&gt; %0a@(SuccessfullyCopiedFiles->'- %(fullpath)', '%0a')" />
   </Target>
 </Project>

@@ -8,7 +8,6 @@
     <Authors>David Nguyen</Authors>
     <Product>BootstrapperLoaderDemo.Repository</Product>
     <Copyright>Copyright © 2017 David Nguyen</Copyright>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\BootstrapperLoaderDemo.Core\BootstrapperLoaderDemo.Core.csproj" />
