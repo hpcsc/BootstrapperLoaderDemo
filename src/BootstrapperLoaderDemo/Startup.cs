@@ -25,19 +25,19 @@ namespace BootstrapperLoaderDemo
                         .Use(new FileSystemAssemblyProvider(PlatformServices.Default.Application.ApplicationBasePath, "BootstrapperLoaderDemo.*.dll"))
                         .ForClass()
                             .HasConstructorParameter(Configuration)
-                            .Methods()
-                                .Call("ConfigureDevelopment").If(env.IsDevelopment)
+                            .When(env.IsDevelopment)
+                                .AddMethodNameConvention("Development")
                         .Build();
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
 
-            _bootstrapperLoader.Trigger("ConfigureContainer", services);
+            _bootstrapperLoader.TriggerConfigureContainer(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
