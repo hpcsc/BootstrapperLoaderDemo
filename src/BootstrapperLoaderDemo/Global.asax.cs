@@ -27,8 +27,8 @@ namespace BootstrapperLoaderDemo
                                         .Use(new FileSystemAssemblyProvider(HttpRuntime.BinDirectory, "BootstrapperLoaderDemo.*.dll"))
                                         .ForClass()
                                             .HasConstructorParameter("DefaultConnection")
-                                        .Methods()
-                                            .Call("ConfigureDevelopment").If(() => HttpContext.Current.IsDebuggingEnabled)
+                                            .When(() => HttpContext.Current.IsDebuggingEnabled)
+                                                .AddMethodNameConvention("Development")
                                         .Build();
 
             var container = ConfigureIoC(bootstrapperLoader);
@@ -42,7 +42,7 @@ namespace BootstrapperLoaderDemo
             //Register all controllers in current assembly with container builder            
             builder.RegisterControllers(Assembly.GetExecutingAssembly()).PropertiesAutowired();
 
-            bootstrapperLoader.Trigger("ConfigureContainer", builder);
+            bootstrapperLoader.TriggerConfigureContainer(builder);
 
             //Build a real container from container builder
             var container = builder.Build();
