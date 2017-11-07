@@ -38,10 +38,10 @@ If everything works correctly, it should show this home page:
 - Since there's no project reference from `BootstrapperLoader` to `BootstrapperLoaderDemo.Repository`, Visual Studio will not copy `BootstrapperLoaderDemo.Repository.dll` and its dependencies to output directory of `BootstrapperLoader` during building. To work around this, I use `PostBuild` target in `BootstrapperLoaderDemo.csproj`:
 
   ```
-  <ItemGroup>
-    <ItemsToCopy Include="./../BootstrapperLoaderDemo.Repository/bin/$(Configuration)/$(TargetFramework)/*.dll" />
-  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <ItemsToCopy Include="./../BootstrapperLoaderDemo.Repository/bin/$(Configuration)/$(TargetFramework)/*.dll" />
+    </ItemGroup>
     <Copy
         SourceFiles="@(ItemsToCopy)"
         DestinationFolder="./bin/$(Configuration)/$(TargetFramework)/temp/">
@@ -65,17 +65,25 @@ If everything works correctly, it should show this home page:
                           .ForClass()
                               //Inject Configuration object into Bootstrapper classes found in those dlls
                               .HasConstructorParameter(Configuration)
-                              .Methods()
-                                  //Call Bootstrapper.ConfigureDevelopment() if it's development environment
-                                  .Call("ConfigureDevelopment").If(env.IsDevelopment)
+                              //Call Bootstrapper.ConfigureDevelopment() if it's development environment
+                              .When(env.IsDevelopment)
+                                  .AddMethodNameConvention("Development")
                           .Build();
   ```
 
 It triggers `ConfigureContainer()` in bootstrapper classes in `Startup.ConfigureServices()`, passing in `IServiceCollection` instance so that bootstrapper classes can register IoC mapping:
 
   ```
-  _bootstrapperLoader.Trigger("ConfigureContainer", services);
+  _bootstrapperLoader.TriggerConfigureContainer(services);
   ```
 
-And trigger `ConfigureDevelopment()` in bootstrapper classes in `Startup.Configure()`, passing in IoC `GetService()`
+And trigger `ConfigureDevelopment()` in bootstrapper classes in `Startup.Configure()`, passing in IoC `GetService()`:
 
+  ```
+  // need to create scope during application startup due to: https://stackoverflow.com/questions/44180773/dependency-injection-in-asp-net-core-2-thows-exception
+  var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+  using (var scope = scopeFactory.CreateScope())
+  {
+      _bootstrapperLoader.TriggerConfigure(scope.ServiceProvider.GetRequiredService);
+  }
+  ```
