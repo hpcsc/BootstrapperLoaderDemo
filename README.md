@@ -6,7 +6,7 @@
 - Make sure you have PostgreSQL database running. If you want to use Docker, here is the command to create a PostgreSQL container for testing purpose:
 
   ```
-  docker run --name bootstrapper-loader-demo -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+  docker run --name bootstrapper-loader-demo -p 5432:5432 -e POSTGRES_PASSWORD=password.123 -d postgres
   ```
 
 - Update connection string in `BootstrapperLoaderDemo\Web.config` to correct database connection string (The connection string provided in `Web.config` assumes we are using PostgreSQL database created from docker command above)
@@ -46,16 +46,20 @@ If everything works correctly, it should show this home page:
                                         .Use(new FileSystemAssemblyProvider(HttpRuntime.BinDirectory, "BootstrapperLoaderDemo.*.dll"))
                                         .ForClass()
                                             .HasConstructorParameter("DefaultConnection")
-                                        .Methods()
-                                            .Call("ConfigureDevelopment").If(() => HttpContext.Current.IsDebuggingEnabled)
+                                            .When(() => HttpContext.Current.IsDebuggingEnabled)
+                                                .AddMethodNameConvention("Development")
                                         .Build();
   ```
 
 It triggers `ConfigureContainer()` in bootstrapper classes in `Startup.ConfigureServices()`, passing in `IServiceCollection` instance so that bootstrapper classes can register IoC mapping:
 
   ```
-  bootstrapperLoader.Trigger("ConfigureContainer", builder);
+  bootstrapperLoader.TriggerConfigureContainer(builder);
   ```
 
-And trigger `ConfigureDevelopment()` in bootstrapper classes in `Startup.Configure()`, passing in IoC `GetService()`
+And trigger `ConfigureDevelopment()` in bootstrapper classes in `Startup.Configure()`, passing in IoC `GetService()`:
+
+  ```
+  bootstrapperLoader.TriggerConfigure(container.Resolve);
+  ```
 
