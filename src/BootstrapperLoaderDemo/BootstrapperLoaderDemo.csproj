@@ -21,4 +21,13 @@
     </Copy>
     <Message Importance="High" Text="PostBuild Target successfully copied:%0a@(ItemsToCopy->'- %(fullpath)', '%0a')%0a -&gt; %0a@(SuccessfullyCopiedFiles->'- %(fullpath)', '%0a')" />
   </Target>
+  <Target Name="PostPublish" AfterTargets="AfterPublish" >
+    <ItemGroup>
+      <ItemsToCopy Include="./../BootstrapperLoaderDemo.Repository/bin/$(Configuration)/$(TargetFramework)/publish/*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ItemsToCopy)" DestinationFolder="./bin/$(Configuration)/$(TargetFramework)/publish">
+      <Output TaskParameter="CopiedFiles" ItemName="SuccessfullyCopiedFiles" />
+    </Copy>
+    <Message Importance="High" Text="PostPublish Target successfully copied:%0a@(ItemsToCopy->'- %(fullpath)', '%0a')%0a -&gt; %0a@(SuccessfullyCopiedFiles->'- %(fullpath)', '%0a')" />
+  </Target>
 </Project>
